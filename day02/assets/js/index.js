@@ -30,7 +30,7 @@ $(function () {
 
   //   ====发送注册请求
   // 1,绑定submit事件
-  $(".layui-form").submit(function (e) {
+  $("#btn-reg").submit(function (e) {
     // 2，阻止默认行为
     e.preventDefault();
     // 3，获取表单数据
@@ -44,17 +44,11 @@ $(function () {
       password: password,
     };
     $.post("/api/reguser", formdata, function (res) {
-      console.log(res);
+      // console.log(res);
       if (res.status === 0) {
-        // console.log(res, message);改修
-        // console.log(res.message);
         $("#link-reg").click();
       }
-      // } else {
-      // console.log(res, message);
-      // console.log(res.message);
-      // }
-      // alert(1);
+
       layui.layer.msg(res.message);
     });
   });
@@ -65,14 +59,18 @@ $(function () {
     e.preventDefault();
     // console.log(111);
     var formdata = $(this).serialize();
+    // http://ajax.frontend.itheima.net/api/login
     $.post("/api/login", formdata, function (res) {
+      // console.log("ajax---success---");
       if (res.status === 0) {
-        window.location.href = "/index.html";
+        // 跳转
+        window.location.href = "/index2.html";
         // console.log(res.token)
-        if (res.token.length !== 0) {
-          // window.localStorage.setItem('token',res.token)
-          res.token.lenght !== 0 && window.localStorage.setItem;
-        }
+        // if (res.token.length !== 0) {
+        // window.localStorage.setItem("token", res.token);
+        // }
+        res.token.length !== 0 &&
+          window.localStorage.setItem("token", res.token);
       }
       layui.layer.msg(res.message); //Authorization 身份认证段
     });
