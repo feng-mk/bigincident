@@ -45,6 +45,7 @@ $(function () {
     };
     $.post("/api/reguser", formdata, function (res) {
       // console.log(res);
+      // 5，处理res响应
       if (res.status === 0) {
         $("#link-reg").click();
       }
@@ -52,7 +53,6 @@ $(function () {
       layui.layer.msg(res.message);
     });
   });
-  // 5，处理res响应
 
   // login请求
   $("#btn-login").submit(function (e) {
@@ -64,7 +64,8 @@ $(function () {
       // console.log("ajax---success---");
       if (res.status === 0) {
         // 跳转
-        window.location.href = "/index2.html";
+        // console.log(1);
+        window.location.href = "./index2.html";
         // console.log(res.token)
         // if (res.token.length !== 0) {
         // window.localStorage.setItem("token", res.token);
