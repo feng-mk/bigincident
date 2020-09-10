@@ -32,7 +32,6 @@ $(function () {
   // 1,绑定submit事件
   $(".layui-form").submit(function (e) {
     // 2，阻止默认行为
-
     e.preventDefault();
     // 3，获取表单数据
     // var username = $(".reg-box input [name=username]").val();
