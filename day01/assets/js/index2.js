@@ -8,31 +8,51 @@ $(function () {
   //   });
 
   var token = window.localStorage.getItem("token") || "";
-  $.ajax({
-    url: "/my/userinfo",
-    //   请求头 加s
-    /* headers: {
-      Authorization: token,
-    }, */
-    success: function (res) {
-      //   debugger; //打断点
-      console.log(res);
-      //   res.data.user_pic
-      var resname = res.data.nickname || res.data.username;
-      $("#welcome").html(resname);
-      // 存在显示图片头像，隐藏文字头像
-      if (res.data.user_pic) {
-        $(".layui-nav-img").attr("src", res.data.user_pic).show();
-        $(".text-avatar").hide();
-      } else {
-        $(".layui-nav-img").hide();
-        /* var first = resname[0].toUpperCase();
-        $(".text-avatar").html(first); */
-        // var first = resname[0].toUpperCase();
-        $(".text-avatar").html(resname[0].toUpperCase());
-      }
-    },
-  });
+  getUserInfo();
+  function getUserInfo() {
+    $.ajax({
+      url: "/my/userinfo",
+      //   请求头 加s
+      /* headers: {
+        Authorization: token,
+      }, */
+      success: function (res) {
+        //   debugger; //打断点
+        console.log("success", res);
+        //   res.data.user_pic
+        if (res.status === 1) return;
+        var resname = res.data.nickname || res.data.username;
+        $("#welcome").html(resname);
+        // 存在显示图片头像，隐藏文字头像
+        if (res.data.user_pic) {
+          $(".layui-nav-img").attr("src", res.data.user_pic).show();
+          $(".text-avatar").hide();
+        } else {
+          $(".layui-nav-img").hide();
+          /* var first = resname[0].toUpperCase();
+          $(".text-avatar").html(first); */
+          // var first = resname[0].toUpperCase();
+          $(".text-avatar").html(resname[0].toUpperCase());
+        }
+      },
+      // 请求完成后判断
+      /* complete: function (res) {
+        console.log("complete---", res);
+        if (
+          res.responseJSON.status === 1 &&
+          res.responseJSON.message === "身份认证失败！"
+          //中文！号
+        ) {
+          window.localStorage.removeItem("token");
+          window.location.href = "/index.html";
+        } else {
+          console.log("--------------");
+        }
+      }, */
+    });
+  }
+
+  window.getUserInfo = getUserInfo;
 
   $("#btn-logout").click(function (e) {
     e.preventDefault();
@@ -48,7 +68,7 @@ $(function () {
       // 2，清空token
       window.localStorage.removeItem("token");
       // 1，跳转登录
-      window.location.href = "/login.html";
+      window.location.href = "/index.html";
 
       //   console.log("----");
 
