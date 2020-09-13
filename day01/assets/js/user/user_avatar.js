@@ -32,4 +32,28 @@ $(function () {
       .attr("src", newImgURL) // 重新设置图片路径
       .cropper(options); // 重新初始化裁剪区域
   });
+  // 确定上传
+  $("#sure").on("click", function (e) {
+    e.preventDefault();
+
+    var dataURL = $image
+      .cropper("getCroppedCanvas", {
+        // 创建一个 Canvas 画布
+        width: 100,
+        height: 100,
+      })
+      .toDataURL("image/png"); //{
+    // 将 Canvas 画布上的内容，转化为base64(文件对象)
+    console.log(dataURL); //结果是 base64文秘
+    // 得到文件对象后，进行后续的操作
+    // console.log(img)
+    // };
+
+    $.post("/my/update/avatar", { avatar: dataURL }, function (res) {
+      if (res.status === 0) {
+        console.log(res);
+        window.parent.getUserInfo();
+      }
+    });
+  });
 });
