@@ -23,7 +23,7 @@ $.ajaxPrefilter(function (options) {
   }; */
   // 三：统一判断token有无token
   options.complete = function (res) {
-    console.log("complete---", res);
+    // console.log("complete---", res);
     if (
       res.responseJSON.status === 1 &&
       res.responseJSON.message === "身份认证失败！"
@@ -32,7 +32,7 @@ $.ajaxPrefilter(function (options) {
       window.localStorage.removeItem("token");
       window.location.href = "/index.html";
     } else {
-      console.log("--------------");
+      // console.log("--------------");
     }
   };
 });

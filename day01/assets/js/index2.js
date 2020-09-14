@@ -18,7 +18,7 @@ $(function () {
       }, */
       success: function (res) {
         //   debugger; //打断点
-        console.log("success", res);
+        // console.log("success", res);
         //   res.data.user_pic
         if (res.status === 1) return;
         var resname = res.data.nickname || res.data.username;
