@@ -50,11 +50,43 @@ $(function () {
     e.preventDefault();
     // 实例化formData数据
     var fd = new FormData($(this)[0]);
-    console.log(fd);
+    // console.log(fd);
     fd.append("state", state);
-    fd.forEach(function (v, k) {
-      console.log(k, v);
-    });
+
+    $image
+      .cropper("getCroppedCanvas", {
+        width: 400,
+        height: 280,
+      })
+      .toBlob(function (blob) {
+        fd.append("cover_img", blob);
+
+        /* fd.forEach(function (v, k) {
+          console.log(k, v);
+        }); */
+        // form->submit->序列化->把表单数据变得像json，比如：key和value
+        // 发送formDato这种数据类型时，需要设置下面两个属性
+        // Content-Type:false
+        // processData:false
+
+        /*  $.ajax((url:`/my/article/add`,data: fd,method:'',success: function (res) {
+          console.log(res);
+        })); */
+
+        $.ajax({
+          url: `/my/article/add`,
+          data: fd,
+          method: "POST",
+          contentType: false,
+          processData: false,
+          success: function (res) {
+            console.log(res);
+            if (res.status === 0) {
+              window.location.href = "/article/art_list.html";
+            }
+          },
+        });
+      });
   });
 });
 
